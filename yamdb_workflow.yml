@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2 
         with:
           push: true
-          tags: brainteaser/api_yambd
+          tags: brainteaser/api_yambd:v2
           file: api_yamdb/Dockerfile
           
   
@@ -59,7 +59,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker pull brainteaser/api_yambd
+            sudo docker pull brainteaser/api_yambd:v2
             sudo docker-compose stop
             sudo docker-compose rm web
             touch .env
