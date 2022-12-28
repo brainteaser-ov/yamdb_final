@@ -43,6 +43,7 @@ jobs:
         with:
           push: true
           tags: brainteaser/api_yambd:latest
+          file: api_yamdb/Dockerfile
           
   
   deploy:
