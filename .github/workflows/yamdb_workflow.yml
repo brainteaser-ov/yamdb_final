@@ -59,7 +59,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker-compose stop
-            sudo docker system prune -a
+            sudo docker system prune
             sudo docker-compose rm web
             sudo docker pull brainteaser/api_yambd:latest
             touch .env
