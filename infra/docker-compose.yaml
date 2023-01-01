@@ -9,7 +9,7 @@ services:
       - ./.env
   web:
 
-    image: brainteaser/api_yambd:latest
+    image: brainteaser/api_yamdb:latest
     restart: always
     volumes:
       - static_value:/app/static/
@@ -32,4 +32,3 @@ volumes:
   static_value:
   media_value:
   postgres_data:
-  
