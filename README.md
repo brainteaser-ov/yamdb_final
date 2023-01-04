@@ -131,13 +131,15 @@ docker-compose exec web python manage.py createsuperuser
 #### Проект будет доступен по адресу
 
 ```
-http://{ваш ip}/api/v1/
+http://51.250.78.172/admin
+
+http://51.250.78.172/api/v1/[]
 ```
 
 #### Документация API
 
 ```
-http://{ваш IP}/redoc/
+http://51.250.78.172/redoc/
 ```
 
 #### [Образ на DockerHub](https://hub.docker.com/repository/docker/brainteaser/api_yamdb)
