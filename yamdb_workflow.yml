@@ -1,10 +1,12 @@
 name: Yamdb workflow
 
+# on: [push]
 on:
   push:
     branches:
       - main
       - 'releases/**'
+
 
 jobs:
   tests: 
