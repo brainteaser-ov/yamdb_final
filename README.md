@@ -1,4 +1,6 @@
-[![Django-app workflow](https://github.com/brainteaser/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)](https://github.com/brainteaser/yamdb_final/actions/workflows/yamdb_workflow.yml)
+## Django-app workflow
+
+[![Django-app workflow](https://github.com/brainteaser-ov/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)](https://github.com/brainteaser-ov/yamdb_final/actions/workflows/yamdb_workflow.yml)
 
 # Yamdb API
 
@@ -8,7 +10,7 @@
 ### Описание
 ***
 
-__Отзывы__ 
+__Отзывы__
 
 Получить список всех отзывов, создать новый отзыв, получить отзыв по id, частично обновить отзыв по id, удалить отзыв по id
 ***
@@ -44,18 +46,45 @@ __Произведения, к которым пишут отзывы__
 
 ## Как запустить проект
 
-### Клонировать репозиторий и перейти в него в командной строке
+### 1. Клонировать репозиторий и перейти в него в командной строке
 
 ```
-git clone git@github.com:brainteaser/yamdb_final.git
+git clone git@github.com:brainteaser-ov/yamdb_final.git
 ```
+#### В Settings - Secrets - Actions добавить переменные
 
-#### Выполните вход на свой удаленный сервер
+```
+DB_ENGINE=django.db.backends.postgresql # указываем, что работаем с postgresql
+DB_NAME=postgres # имя базы данных
+POSTGRES_USER=postgres # логин для подключения к базе данных
+POSTGRES_PASSWORD=postgres # пароль для подключения к БД (установите свой)
+DB_HOST=db # название сервиса (контейнера)
+DB_PORT=5432 # порт для подключения к БД
+SECRET_KEY='Очень секретно'
+```
+> **SECRET_KEY** используется для криптографической подписи (для генерации хэшей и токенов), длина ключа - 50 символов
+Генератор ключей **Django**:
+```
+https://djecrety.ir
+DOCKER_PASSWORD=<Docker password>
+DOCKER_USERNAME=<Docker username>
+USER=<username для подключения к серверу>
+HOST=<IP сервера>
+PASSPHRASE=<пароль для сервера, если он установлен>
+SSH_KEY=<ваш SSH ключ(cat ~/.ssh/id_rsa)>
+TG_CHAT_ID=<ID чата, в который придет сообщение>
+TELEGRAM_TOKEN=<токен вашего бота>
+```
+#### Выполните вход на удаленный сервер
+
+```
+ ssh <username>@<ip>
+```
 
 #### Установите docker на сервер
 
 ```
-sudo apt install docker.io
+https://docs.docker.com/get-docker/
 ```
 
 #### Установите docker-compose на сервер(актуальная версия [тут](https://github.com/docker/compose/releases))
@@ -63,13 +92,10 @@ sudo apt install docker.io
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
-
-#### Затем необходимо задать правильные разрешения, чтобы сделать команду docker-compose исполняемой
-
+#### Запустите docker-compose:
 ```
-sudo chmod +x /usr/local/bin/docker-compose
+docker-compose up -d --build
 ```
-
 #### Скопируйте файлы docker-compose.yaml и nginx/default.conf из проекта на сервер
 
 ```
@@ -79,30 +105,6 @@ scp docker-compose.yaml <username>@<host>:/home/<username>/docker-compose.yaml
 ```
 scp -r nginx <username>@<host>:/home/<username>/
 ```
-
-#### Добавьте в Secrets GitHub переменные окружения для работы
-
-```
-DB_ENGINE=django.db.backends.postgresql
-DB_HOST=db
-DB_NAME=postgres
-DB_PASSWORD=postgres
-DB_PORT=5432
-DB_USER=postgres
-
-DOCKER_PASSWORD=<Docker password>
-DOCKER_USERNAME=<Docker username>
-
-USER=<username для подключения к серверу>
-HOST=<IP сервера>
-PASSPHRASE=<пароль для сервера, если он установлен>
-SSH_KEY=<ваш SSH ключ(cat ~/.ssh/id_rsa)>
-
-TG_CHAT_ID=<ID чата, в который придет сообщение>
-TELEGRAM_TOKEN=<токен вашего бота>
-```
-
-#### Запушить на Github. После успешного деплоя зайдите на боевой сервер и выполните команды
 
 #### Собрать статические файлы в STATIC_ROOT
 
@@ -133,7 +135,9 @@ docker-compose exec web python manage.py createsuperuser
 ```
 http://51.250.78.172/admin
 
-http://51.250.78.172/api/v1/[]
+http://51.250.78.172/api/v1/categories/
+http://51.250.78.172/api/v1/users/
+http://51.250.78.172/api/v1/titles/
 ```
 
 #### Документация API
@@ -144,27 +148,6 @@ http://51.250.78.172/redoc/
 
 #### [Образ на DockerHub](https://hub.docker.com/repository/docker/brainteaser/api_yamdb)
 
-
-#### Переменные окружения
-
-> Проект использует базу данных **PostgreSQL**
-Для подключения и выполненя запросов к базе данных необходимо создать и заполнить файл ".env" с переменными окружения в папке "./infra/".
-
-Шаблон для заполнения файла ".env":
-```
-DB_ENGINE=django.db.backends.postgresql # указываем, что работаем с postgresql
-DB_NAME=postgres # имя базы данных
-POSTGRES_USER=postgres # логин для подключения к базе данных
-POSTGRES_PASSWORD=postgres # пароль для подключения к БД (установите свой)
-DB_HOST=db # название сервиса (контейнера)
-DB_PORT=5432 # порт для подключения к БД
-SECRET_KEY='Очень секретно'
-```
-> **SECRET_KEY** используется для криптографической подписи (для генерации хэшей и токенов), длина ключа - 50 символов
-Генератор ключей **Django**:
-```
-https://djecrety.ir
-```
 #### Стек
 ![](https://img.shields.io/badge/Python%20-3-informational) ![](https://img.shields.io/badge/django-project-yellow) ![](https://img.shields.io/badge/django-DRF-ff69b4) ![](https://img.shields.io/badge/Docker-Container-success) ![](https://img.shields.io/badge/Postgre-SQL-blueviolet) ![](https://img.shields.io/badge/nginx-org-ff69b4) ![](https://img.shields.io/badge/gunicorn-org-green)
 ![](https://img.shields.io/badge/simple-JWT-red)
@@ -174,3 +157,5 @@ https://djecrety.ir
 - База данных: [PostgreSQL](https://www.postgresql.org) (контейнер db)
 
 #### Directed by [Оксана Гончарова](https://github.com/brainteaser-ov)
+
+#### Happy New Year!
